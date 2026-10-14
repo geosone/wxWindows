@@ -26,8 +26,9 @@ LIB     := $(OUT)/lib/wx.lib
 
 IFLAGS  := -i=$(TOP)/include/msw -i=$(TOP)/include/base -i=$(TOP)/contrib/fafa \
            -i=$(WATCOM)/h -i=$(WATCOM)/h/win
-# makewat.env (16-bit windows): /zw /w2 /zq /d1 /ml /dwx_msw
-CFLAGS  := -zq -zw -ml -bt=windows -dwx_msw -w1 -d1 $(if $(DEBUG),-d2) $(IFLAGS)
+# makewat.env (16-bit windows): /zw /w2 /zq /d1 /ml /dwx_msw; -zt256: larger
+# data outside DGROUP (makewat.env mentions /zt4: DGROUP overflow)
+CFLAGS  := -zq -fr -zw -ml -zt256 -bt=windows -dwx_msw -w1 -d1 $(if $(DEBUG),-d2) $(IFLAGS)
 
 # --- library ------------------------------------------------------------
 # src/msw/makefile.wat: OBJECTS, BASEOBJECTS, EXTRAMODULES
@@ -81,31 +82,27 @@ $(LIB): $(LIBOBJS) | $(OUT)/lib/.dir
 	$(WLIB) -q -b -c -n -p=512 $@ $(addprefix +,$(LIBOBJS))
 
 # --- samples ------------------------------------------------------------
-# a sample: samples/<name> with <name>.cpp; all its .cpp files, resources
-# from <name>.rc (else the library's wx.rc)
-SAMPLES := $(notdir $(patsubst %/,%,$(dir $(wildcard $(TOP)/samples/*/*.cpp))))
-SAMPLES := $(sort $(foreach s,$(SAMPLES),$(if $(wildcard $(TOP)/samples/$(s)/$(s).cpp),$(s))))
-# not for 16-bit Windows: ODBC
-SAMPLES := $(filter-out odbc,$(SAMPLES))
-WINLIBS := commdlg mmsystem shell ddeml
+# samples.lst: program, directory, resource script, sources
+WINLIBS := commdlg mmsystem shell ddeml ctl3dv2
+SAMPLELINES := $(shell sed -e 's/\#.*//' -e '/^ *$$/d' -e 's/  */:/g' $(TOP)/samples.lst)
 
 define SAMPLE
-$(1)_SRCS := $(wildcard $(TOP)/samples/$(1)/*.cpp)
-$(1)_OBJS := $$(patsubst $(TOP)/samples/$(1)/%.cpp,$(OUT)/samples/$(1)/%.obj,$$($(1)_SRCS))
-$(1)_RC   := $(firstword $(wildcard $(TOP)/samples/$(1)/$(1).rc) $(TOP)/include/msw/wx.rc)
-$(OUT)/samples/$(1)/%.obj: $(TOP)/samples/$(1)/%.cpp $(LIB) | $(OUT)/samples/$(1)/.dir
-	cd $(TOP)/samples/$(1) && $(CXX) $(CFLAGS) -fo=$$@ $$< > $$@.log 2>&1 || { cat $$@.log; exit 1; }
-$(OUT)/samples/$(1)/$(1).res: $$($(1)_RC) | $(OUT)/samples/$(1)/.dir
-	cd $(TOP)/samples/$(1) && $(WRC) -q -r -bt=windows -i=$(TOP)/include/msw -i=$(TOP)/contrib/fafa -i=$(WATCOM)/h/win -fo=$$@ $$< > $$@.log 2>&1 || { cat $$@.log; exit 1; }
-$(OUT)/samples/$(1)/$(1).exe: $$($(1)_OBJS) $(OUT)/samples/$(1)/$(1).res $(LIB)
-	cd $(OUT)/samples/$(1) && $(WLINK) option quiet system windows $(if $(DEBUG),debug all) \
-	  option stack=16k option heapsize=16k name $$@ \
+$(1)_OBJS := $(addprefix $(OUT)/samples/$(2)/,$(addsuffix .obj,$(4)))
+$(OUT)/samples/$(2)/%.obj: $(TOP)/samples/$(2)/%.cpp $(LIB) | $(OUT)/samples/$(2)/.dir
+	cd $(TOP)/samples/$(2) && $(CXX) $(CFLAGS) -fo=$$@ $$< > $$@.log 2>&1 || { cat $$@.log; exit 1; }
+$(OUT)/samples/$(2)/$(1).res: $(TOP)/samples/$(2)/$(3) $(TOP)/include/msw/wx.rc | $(OUT)/samples/$(2)/.dir
+	cd $(TOP)/samples/$(2) && $(WRC) -q -r -bt=windows -i=$(TOP)/include/msw -i=$(TOP)/contrib/fafa -i=$(WATCOM)/h/win -fo=$$@ $(3) > $$@.log 2>&1 || { cat $$@.log; exit 1; }
+$(OUT)/samples/$(2)/$(1).exe: $$($(1)_OBJS) $(OUT)/samples/$(2)/$(1).res $(LIB)
+	cd $(OUT)/samples/$(2) && $(WLINK) option quiet format windows $(if $(DEBUG),debug all) name $$@ \
+	  libpath $(WATCOM)/lib286/win libpath $(WATCOM)/lib286 library windows \
 	  $$(foreach o,$$($(1)_OBJS),file $$(o)) library $(LIB) $(foreach l,$(WINLIBS),library $(l)) \
+	  library $(WATCOM)/lib286/win/plibl.lib \
+	  option stack=16k option heapsize=16k option version=3.10 \
+	  option resource=$(OUT)/samples/$(2)/$(1).res option map=$(1).map \
 	  > $$@.log 2>&1 || { cat $$@.log; exit 1; }
-	$(WRC) -q $(OUT)/samples/$(1)/$(1).res $$@ > $$@.rc.log 2>&1 || { cat $$@.rc.log; exit 1; }
-samples: $(OUT)/samples/$(1)/$(1).exe
+samples: $(OUT)/samples/$(2)/$(1).exe
 endef
-$(foreach s,$(SAMPLES),$(eval $(call SAMPLE,$(s))))
+$(foreach l,$(SAMPLELINES),$(eval $(call SAMPLE,$(word 1,$(subst :, ,$(l))),$(word 2,$(subst :, ,$(l))),$(word 3,$(subst :, ,$(l))),$(wordlist 4,99,$(subst :, ,$(l))))))
 
 .PHONY: all lib samples clean
 all: lib samples

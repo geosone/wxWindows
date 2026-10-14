@@ -1,0 +1,28 @@
+# Samples built by GNUmakefile (from the samples' makefile.wat/makefile.nt):
+# <program> <directory> <resource script> <sources (without .cpp)>
+# The program gets the directory's name where the original used "test".
+# Not built: mfc (needs MFC), odbc (no 16-bit ODBC in OpenWatcom),
+# static (needs USE_EXTENDED_STATICS), vlist (needs USE_VLBOX), memcheck
+# (needs DEBUG=1).
+animate   animate   animate.rc   animate tool3d
+bombs     bombs     bombs.rc     bombs bombs1 game
+buttnbar  buttnbar  test.rc      test
+dialogs   dialogs   dialogs.rc   dialogs
+docview   docview   docview.rc   docview doc view
+form      form      form.rc      form
+forty     forty     forty.rc     forty canvas card game pile playerdg scoredg scorefil
+fractal   fractal   fractal.rc   fractal
+hello     hello     hello.rc     hello
+client    ipc       client.rc    client
+server    ipc       server.rc    server
+layout    layout    layout.rc    layout
+mdi       mdi       mdi.rc       mdi
+minimal   minimal   minimal.rc   minimal
+panel     panel     panel.rc     panel
+pressup   pressup   pressup.rc   board gui
+printing  printing  printing.rc  printing
+resource  resource  resource.rc  resource
+splitter  splitter  test.rc      test
+toolbar   toolbar   test.rc      test
+types     types     types.rc     types
+wxpoem    wxpoem    wxpoem.rc    wxpoem

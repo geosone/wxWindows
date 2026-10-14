@@ -45,7 +45,7 @@ class PaletteFrame: public wxFrame
   PaletteFrame(wxFrame *frame, char *title, int x, int y, int w, int h,
             long style = wxSDI | wxDEFAULT_FRAME);
   ~PaletteFrame(void);
-  OnClose(void) { return TRUE; }
+  Bool OnClose(void) { return TRUE; }
 };
 
 class TestToolBar: public wxButtonBar

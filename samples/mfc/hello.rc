@@ -20,7 +20,7 @@
 // Icon
 //
 
-AFX_IDI_STD_FRAME       ICON    DISCARDABLE     "HELLO.ICO"
+AFX_IDI_STD_FRAME       ICON    DISCARDABLE     "hello.ico"
 
 //////////////////////////////////////////////////////////////////////////////
 //

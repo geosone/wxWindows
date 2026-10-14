@@ -21,8 +21,8 @@
 // Icon
 //
 
-WXWIN                   ICON    DISCARDABLE     "WXWIN.ICO"
-AIAI                    ICON    DISCARDABLE     "AIAI.ICO"
+WXWIN                   ICON    DISCARDABLE     "wxwin.ico"
+AIAI                    ICON    DISCARDABLE     "aiai.ico"
 
 //////////////////////////////////////////////////////////////////////////////
 //
