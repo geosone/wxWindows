@@ -734,6 +734,11 @@ void wxFrame::SetMenuBar(wxMenuBar *menu_bar)
     {
       wxMDIFrame *mdi_frame = (wxMDIFrame *)cframe;
       HMENU subMenu = GetSubMenu(mdi_frame->window_menu, 0);
+      // title of the Window menu from the resource (wxWindowMenu: a
+      // program can give its own, e.g. translated)
+      char wtitle[60];
+      if (GetMenuString(mdi_frame->window_menu, 0, wtitle, sizeof(wtitle), MF_BYPOSITION) <= 0)
+        strcpy(wtitle, "&Window");
 
       // Try to insert Window menu in front of Help, otherwise append it.
       int N = GetMenuItemCount(menu);
@@ -747,14 +752,15 @@ void wxFrame::SetMenuBar(wxMenuBar *menu_bar)
         {
            success = TRUE;
            InsertMenu(menu, i, MF_BYPOSITION | MF_POPUP | MF_STRING,
-                      (UINT)subMenu, "&Window");
+                      (UINT)subMenu, wtitle);
            break;
         }
       }
-      if (!success)
-        AppendMenu(menu, MF_POPUP,
-                         (UINT)subMenu,
-                         "&Window");
+      if (!success && N > 1)    // Help in another language: before the last menu
+        InsertMenu(menu, N - 1, MF_BYPOSITION | MF_POPUP | MF_STRING,
+                   (UINT)subMenu, wtitle);
+      else if (!success)
+        AppendMenu(menu, MF_POPUP, (UINT)subMenu, wtitle);
       mdi_frame->parent_frame_active = TRUE;
 #ifdef WIN32
       SendMessage(mdi_frame->client_hwnd, WM_MDISETMENU,
@@ -772,6 +778,9 @@ void wxFrame::SetMenuBar(wxMenuBar *menu_bar)
       wxMDIFrame *parent = (wxMDIFrame *)GetParent()->handle;
       parent->parent_frame_active = FALSE;
       HMENU subMenu = GetSubMenu(parent->window_menu, 0);
+      char wtitle[60];
+      if (GetMenuString(parent->window_menu, 0, wtitle, sizeof(wtitle), MF_BYPOSITION) <= 0)
+        strcpy(wtitle, "&Window");
 
       // Try to insert Window menu in front of Help, otherwise append it.
       int N = GetMenuItemCount(menu);
@@ -785,14 +794,15 @@ void wxFrame::SetMenuBar(wxMenuBar *menu_bar)
         {
            success = TRUE;
            InsertMenu(menu, i, MF_BYPOSITION | MF_POPUP | MF_STRING,
-                      (UINT)subMenu, "&Window");
+                      (UINT)subMenu, wtitle);
            break;
         }
       }
-      if (!success)
-        AppendMenu(menu, MF_POPUP,
-                         (UINT)subMenu,
-                         "&Window");
+      if (!success && N > 1)    // Help in another language: before the last menu
+        InsertMenu(menu, N - 1, MF_BYPOSITION | MF_POPUP | MF_STRING,
+                   (UINT)subMenu, wtitle);
+      else if (!success)
+        AppendMenu(menu, MF_POPUP, (UINT)subMenu, wtitle);
 #ifdef WIN32
       SendMessage(parent->client_hwnd, WM_MDISETMENU,
                   (WPARAM)menu,
