@@ -1,0 +1,3 @@
+build/
+utils/prologio/src/y_tab.c
+utils/prologio/src/lex_yy.c

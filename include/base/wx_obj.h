@@ -135,7 +135,8 @@ WXDLLEXPORT_CTORFN wxObject *wxConstructorFor##name(void) \
 
 #if USE_IOSTREAMH
 
-#if defined(__BORLANDC__) || defined(__MWERKS)
+// OpenWatcom: istream/ostream are typedefs of the std:: classes
+#if defined(__BORLANDC__) || defined(__MWERKS) || defined(__WATCOMC__)
 
 #include <iostream.h>
 

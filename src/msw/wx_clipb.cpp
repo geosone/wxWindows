@@ -75,7 +75,7 @@ Bool wxIsClipboardFormatAvailable(int dataFormat)
 }
 
 #if USE_IMAGE_LOADING_IN_MSW
-#include "..\..\utils\dib\dib.h"
+#include "../../utils/dib/dib.h"
 #endif
 
 Bool wxSetClipboardData(int dataFormat, wxObject *obj, int width, int height)

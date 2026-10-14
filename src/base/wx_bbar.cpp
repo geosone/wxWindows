@@ -524,7 +524,7 @@ LONG APIENTRY _EXPORT
 #error If USE_IMAGE_LOADING_IN_MSW is set to 0, then USE_BUTTONBAR must be set to 0 too.
 #endif
 
-#include "..\..\utils\dib\dib.h"
+#include "../../utils/dib/dib.h"
 static void DrawButton(HDC hdc, int x, int y, int dx, int dy,
       wxToolBarTool *tool, int state);
 static HBITMAP CreateMappedBitmap(HINSTANCE hInstance, HBITMAP hBitmap);

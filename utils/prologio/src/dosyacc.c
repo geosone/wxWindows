@@ -234,7 +234,8 @@ void yyerror(char *s)
  * to test
  */
 
-#ifndef __SC__
+// OpenWatcom: lex_yy.c (doslex.c) already defines yywrap()
+#if !defined(__SC__) && !defined(__WATCOMC__)
 #ifdef USE_DEFINE
 #ifndef yywrap
 #define yywrap() 1

@@ -31,16 +31,16 @@
 
 #if USE_XPM_IN_MSW
 #define FOR_MSW 1
-#include "..\..\contrib\wxxpm\libxpm.34b\lib\xpm34.h"
+#include "../../contrib/wxxpm/libxpm.34b/lib/xpm34.h"
 #endif
 
 #if USE_IMAGE_LOADING_IN_MSW
-#include "..\..\utils\dib\dib.h"
+#include "../../utils/dib/dib.h"
 #endif
 
 #if USE_RESOURCE_LOADING_IN_MSW
-#include "..\..\utils\rcparser\src\wxcurico.h"
-#include "..\..\utils\rcparser\src\cric_prv.h"
+#include "../../utils/rcparser/src/wxcurico.h"
+#include "../../utils/rcparser/src/cric_prv.h"
 #endif
 
 /*

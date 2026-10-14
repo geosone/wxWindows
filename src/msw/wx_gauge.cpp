@@ -26,7 +26,7 @@
 #include "wx_gauge.h"
 #include "wx_itemp.h"
 
-#include "..\..\contrib\gauge\zyzgauge.h"
+#include "../../contrib/gauge/zyzgauge.h"
 
 // Progress bar is not a good replacement for the gauge
 // implementation because:

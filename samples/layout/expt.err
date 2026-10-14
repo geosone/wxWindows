@@ -1,0 +1,4 @@
+/home/mario/mars/wxWindows/samples/layout/expt.cpp(25): Error! E498: col(30) syntax error before 'wxObject'; probable cause: incorrectly spelled type name
+/home/mario/mars/wxWindows/samples/layout/expt.cpp(81): Error! E326: col(1) defining 'leftOf' is not possible because its type has unknown size
+/home/mario/mars/wxWindows/samples/layout/expt.cpp(80): Note! N392: col(16) definition: 'wxConstraintOp leftOf'
+/home/mario/mars/wxWindows/samples/layout/expt.cpp(81): Error! E006: col(1) syntax error; probable cause: missing ';'

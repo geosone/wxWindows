@@ -54,7 +54,7 @@
 #endif
 
 #if USE_GAUGE
-#include "..\..\contrib\gauge\zyzgauge.h"
+#include "../../contrib/gauge/zyzgauge.h"
 #endif
 
 #if CTL3D

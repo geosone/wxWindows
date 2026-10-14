@@ -2392,10 +2392,10 @@ wxRE_match_2 (struct wxRE_pattern_buffer *pbufp,
 	case charset:
 	case charset_not:
 	  {
-	    int not = 0;	    /* Nonzero for charset_not.  */
+	    int not_ = 0;	    /* Nonzero for charset_not.  */
 	    register int c;
 	    if (*(p - 1) == (unsigned char) charset_not)
-	      not = 1;
+	      not_ = 1;
 
 	    PREFETCH;	    /* Fetch a data character. */
 
@@ -2406,11 +2406,11 @@ wxRE_match_2 (struct wxRE_pattern_buffer *pbufp,
 
 	    if (c < *p * BYTEWIDTH
 		&& p[1 + c / BYTEWIDTH] & (1 << (c % BYTEWIDTH)))
-	      not = !not;
+	      not_ = !not_;
 
 	    p += 1 + *p;
 
-	    if (!not) goto fail;
+	    if (!not_) goto fail;
 	    SET_REGS_MATCHED;
             d++;
 	    break;
@@ -2480,13 +2480,13 @@ wxRE_match_2 (struct wxRE_pattern_buffer *pbufp,
 		else if (p1[3] == (unsigned char) charset
 			 || p1[3] == (unsigned char) charset_not)
 		  {
-		    int not = p1[3] == (unsigned char) charset_not;
+		    int not_ = p1[3] == (unsigned char) charset_not;
 		    if (c < p1[4] * BYTEWIDTH
 			&& p1[5 + c / BYTEWIDTH] & (1 << (c % BYTEWIDTH)))
-		      not = !not;
+		      not_ = !not_;
 		    /* `not' is 1 if c would match.  */
 		    /* That means it is not safe to finalize.  */
-		    if (!not)
+		    if (!not_)
 		      p[-3] = (unsigned char) finalize_jump;
 		  }
 	      }

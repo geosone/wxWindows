@@ -686,7 +686,7 @@ char *wxExpandPath(char *buf, const char *name)
 #endif
 	{
 	    register char  *start = d;
-	    register        braces = (*s == '{' || *s == '(');
+	    register int    braces = (*s == '{' || *s == '(');
 	    register char  *value;
 	    while (*d++ = *s)
 		if (braces ? (*s == '}' || *s == ')') : !(isalnum(*s) || *s == '_') )

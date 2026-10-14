@@ -66,7 +66,7 @@ extern HBRUSH SetupBackground(HWND wnd) ; // in wx_main.cc
 #endif
 
 #if USE_ITSY_BITSY
-#include "..\..\contrib\itsybits\itsybits.h"
+#include "../../contrib/itsybits/itsybits.h"
 #endif
 
 #if !defined(APIENTRY)	// NT defines APIENTRY, 3.x not

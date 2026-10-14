@@ -43,7 +43,14 @@
 #include <commdlg.h>
 
 #ifndef WIN32
+#ifdef __WATCOMC__
+#include <drivinit.h>     // DEVMODE (Windows 3.1 SDK: print.h)
+#ifndef DM_ORIENTATION
+#define DM_ORIENTATION 0x00000001L   // print.h, missing in OpenWatcom
+#endif
+#else
 #include <print.h>
+#endif
 #endif
 
 #if !defined(APIENTRY)	// NT defines APIENTRY, 3.x not
@@ -65,7 +72,7 @@ LONG APIENTRY _EXPORT wxAbortProc(HDC hPr, int Code);
 
 /*
 #ifdef GNUWIN32
-#include "gnuwin32\extra.h"
+#include "gnuwin32/extra.h"
 #endif
 */
 

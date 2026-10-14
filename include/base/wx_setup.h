@@ -162,6 +162,12 @@
 
 #define USE_ODBC_IN_MSW_ONLY           1
 
+// OpenWatcom has no headers/libraries for 16-bit ODBC
+#if defined(__WATCOMC__) && !defined(__386__) && USE_ODBC
+#undef USE_ODBC
+#define USE_ODBC 0
+#endif
+
 #ifndef wx_msw
 #if USE_ODBC && USE_ODBC_IN_MSW_ONLY
 #undef USE_ODBC

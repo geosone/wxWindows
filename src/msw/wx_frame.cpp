@@ -37,7 +37,7 @@
 #endif
 
 #if USE_ITSY_BITSY
-#include "..\..\contrib\itsybits\itsybits.h"
+#include "../../contrib/itsybits/itsybits.h"
 #endif
 
 extern wxList wxModelessWindows;

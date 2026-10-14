@@ -32,7 +32,7 @@
 
 // This is the correct line for GNUWIN32: uncomment, and comment out the other one.
 // #include "wx_setup.h"
-#include "..\base\wx_setup.h"
+#include "../base/wx_setup.h"
 
 //////////////////////////////////////////////////////////////////////////////
 //

@@ -1,0 +1,5 @@
+/home/mario/mars/wxWindows-1.68/include/base/wb_text.h(48): Warning! W728: col(1) class modifiers for 'wxWindow' conflict with class modifiers for 'std::streambuf'
+/home/mario/mars/wxWindows-1.68/include/base/wb_text.h(48): Note! N393: col(1) included from /home/mario/mars/wxWindows-1.68/include/msw/wx_text.h(15)
+/home/mario/mars/wxWindows-1.68/include/base/wb_text.h(48): Note! N393: col(1) included from /home/mario/mars/wxWindows-1.68/include/base/wx.h(51)
+/home/mario/mars/wxWindows-1.68/include/base/wb_text.h(48): Note! N393: col(1) included from /home/mario/mars/wxWindows-1.68/include/base/wx_prec.h(18)
+/home/mario/mars/wxWindows-1.68/include/base/wb_text.h(48): Note! N393: col(1) included from /home/mario/mars/wxWindows-1.68/src/base/wb_dc.cpp(20)
