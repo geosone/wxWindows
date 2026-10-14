@@ -22,7 +22,7 @@ typedef enum {
   wxLANGUAGE_ENGLISH
 } wxlanguage_t;
 
-WXDLLEXPORT extern char **wx_msg_str;
+extern char ** WXDLLEXPORT_DATA wx_msg_str;
 WXDLLEXPORT extern void wxSetLanguage(wxlanguage_t language);
 
 #define wxSTR(X)	wx_msg_str[X]

@@ -302,7 +302,7 @@ class WXDLLEXPORT wxbWindow: public wxEvtHandler
 #endif
 };
 
-extern wxList wxTopLevelWindows;
+extern wxList WXDLLEXPORT_DATA wxTopLevelWindows;
 
 
 class WXDLLEXPORT wxRectangle: public wxObject

@@ -24,7 +24,7 @@ typedef       void    *wxbRadioBox ;
 #include "wx_panel.h"
 #include "wx_item.h"
 
-WXDLLEXPORT extern Constdata char *wxRadioBoxNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxRadioBoxNameStr;
 
 // Radio box item
 class wxBitmap ;
@@ -73,7 +73,7 @@ class WXDLLEXPORT wxbRadioBox: public wxItem
 };
 
 #if USE_RADIOBUTTON
-extern Constdata char *wxRadioButtonNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxRadioButtonNameStr;
 
 class WXDLLEXPORT wxbRadioButton: public wxItem
 {

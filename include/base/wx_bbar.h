@@ -19,7 +19,7 @@
 #if USE_BUTTONBAR && USE_TOOLBAR
 #include "wx_tbar.h"
 
-WXDLLEXPORT extern Constdata char *wxButtonBarNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxButtonBarNameStr;
 
 #if WIN95
 #define DEFAULTBITMAPX   16

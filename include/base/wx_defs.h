@@ -114,7 +114,18 @@ typedef short int WXTYPE;
  * Making or using wxWindows as a Windows DLL
  */
 
-#ifdef wx_msw
+#if defined(wx_msw) && defined(__WATCOMC__) && !defined(__386__)
+// OpenWatcom, 16-bit Windows: the DLL's functions are exported by the
+// linker (every function loads its DS, see src/msw/owdll.h); a program
+// reaches the DLL's global data through far references
+#  define WXDLLEXPORT
+#  define WXDLLEXPORT_CTORFN
+#  ifdef WXUSINGDLL
+#    define WXDLLEXPORT_DATA __far
+#  else
+#    define WXDLLEXPORT_DATA
+#  endif
+#elif defined(wx_msw)
 #  ifdef WXMAKINGDLL
 #    define WXDLLEXPORT __declspec( dllexport )
 #    define WXDLLEXPORT_CTORFN __declspec( dllexport )
@@ -128,6 +139,9 @@ typedef short int WXTYPE;
 #else
 #  define WXDLLEXPORT
 #  define WXDLLEXPORT_CTORFN
+#endif
+#ifndef WXDLLEXPORT_DATA
+#  define WXDLLEXPORT_DATA
 #endif
 
 /*

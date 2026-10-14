@@ -910,7 +910,7 @@ char tmp[128] ;
 // Note that WinMain is also defined in dummy.obj, which is linked to
 // an application that is using the DLL version of wxWindows.
 
-#if !defined(_DLL)
+#if !defined(_DLL) && !defined(WXMAKINGDLL)
 
 #ifdef __WATCOMC__
 int PASCAL
@@ -954,6 +954,28 @@ BOOL WINAPI DllMain (HANDLE hModule, DWORD fdwReason, LPVOID lpReserved)
 }
 
 #endif // _DLL
+
+#if defined(WXMAKINGDLL) && defined(__WATCOMC__) && !defined(__386__)
+// 16-bit Windows DLL (OpenWatcom): entry point; the program's WinMain is in
+// dummy.cpp (WXUSINGDLL) and calls wxEntry.  The program allocates the
+// objects it hands to wxWindows (frames, items) with this DLL's heap, so
+// that the DLL can delete them: its operator new/delete call these.
+extern "C" int __far __pascal LibMain(HINSTANCE WXUNUSED(hInstance), WORD WXUNUSED(wDataSeg),
+                                      WORD WXUNUSED(wHeapSize), LPSTR WXUNUSED(lpCmdLine))
+{
+  return 1;
+}
+
+void *wxDllAlloc(size_t size)
+{
+  return ::operator new(size);
+}
+
+void wxDllFree(void *p)
+{
+  ::operator delete(p);
+}
+#endif
 
 #endif // NOMAIN
 

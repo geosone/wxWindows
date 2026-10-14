@@ -66,7 +66,7 @@ class WXDLLEXPORT wxApp: public wxbApp
   Bool DoResourceCleanup(void);
 };
 
-extern HINSTANCE wxhInstance;
+extern HINSTANCE WXDLLEXPORT_DATA wxhInstance;
 
 #if !defined(_WINDLL) || (defined(_WINDLL) && defined(WXMAKINGDLL))
 WXDLLEXPORT int wxEntry(HINSTANCE hInstance, HINSTANCE hPrevInstance, char *lpszCmdLine,

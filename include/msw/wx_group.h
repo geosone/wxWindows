@@ -18,7 +18,7 @@
 typedef       void    *wxGroupBox;
 #else
 
-WXDLLEXPORT extern Constdata char *wxGroupBoxNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxGroupBoxNameStr;
 
 // Group box
 class WXDLLEXPORT wxGroupBox: public wxbGroupBox

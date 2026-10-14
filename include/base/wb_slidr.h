@@ -24,7 +24,7 @@
 typedef       void    *wxbSlider ;
 #else
 
-WXDLLEXPORT extern Constdata char *wxSliderNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxSliderNameStr;
 
 // Slider
 class WXDLLEXPORT wxbSlider: public wxItem

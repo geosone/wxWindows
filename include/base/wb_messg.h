@@ -24,7 +24,7 @@
 typedef       void    *wxbMessage ;
 #else
 
-WXDLLEXPORT extern Constdata char *wxMessageNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxMessageNameStr;
 
 // Message item
 class WXDLLEXPORT wxbMessage: public wxItem

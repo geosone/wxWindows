@@ -56,8 +56,37 @@ int APIENTRY
  WinMain(HANDLE hInstance, HANDLE hPrevInstance, LPSTR m_lpCmdLine,
                     int nCmdShow )
 {
+#if defined(__WATCOMC__) && !defined(__386__)
+  // 16-bit DLL build (OpenWatcom): the program's code loads its DGROUP
+  // (owdll.h), which is the first instance's - activate that one instead
+  if (hPrevInstance)
+  {
+    HWND hWnd;
+    for (hWnd = GetWindow(GetDesktopWindow(), GW_CHILD); hWnd; hWnd = GetWindow(hWnd, GW_HWNDNEXT))
+      if (GetWindowWord(hWnd, GWW_HINSTANCE) == (WORD)hPrevInstance &&
+          !GetWindow(hWnd, GW_OWNER) && IsWindowVisible(hWnd))
+      {
+        if (IsIconic(hWnd))
+          ShowWindow(hWnd, SW_RESTORE);
+        BringWindowToTop(hWnd);
+        break;
+      }
+    return 0;
+  }
+#endif
   return wxEntry(hInstance, hPrevInstance, m_lpCmdLine, nCmdShow);
 }
+
+#if defined(__WATCOMC__) && !defined(__386__)
+// 16-bit Windows DLL (OpenWatcom): objects come from the DLL's heap, the
+// DLL deletes some of them (see wx_main.cpp)
+void *wxDllAlloc(size_t size);
+void wxDllFree(void *p);
+void *operator new(size_t size) { return wxDllAlloc(size); }
+void operator delete(void *p) { wxDllFree(p); }
+void *operator new[](size_t size) { return wxDllAlloc(size); }
+void operator delete[](void *p) { wxDllFree(p); }
+#endif
 #endif
 
 

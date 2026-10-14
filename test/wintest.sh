@@ -14,8 +14,11 @@
 #              (default ../386MAX/build/bin/CTL3DV2.DLL if present)
 #   SECS       seconds until the screenshot (default 90)
 #   JOBS       QEMUs at the same time (default 4)
+#   DLL=1      the samples linked against build/dll/WX.DLL (make samples-dll),
+#              WX.DLL is copied next to each
 #
-# Output: build/test/<os>/<sample>.png and index.png (all screenshots)
+# Output: build/test/<os>/<sample>.png and index.png (all screenshots);
+# DLL=1: build/test-dll/
 set -uo pipefail
 TOP=$(cd "$(dirname "$0")/.." && pwd)
 OS=${1:-all}; shift 2>/dev/null
@@ -23,6 +26,7 @@ WIN311IMG=${WIN311IMG:-$TOP/../386MAX/build/win311/win311.img}
 WIN98IMG=${WIN98IMG:-$TOP/../386MAX/build/win98/win98-base.img}
 CTL3DDLL=${CTL3DDLL:-$TOP/../386MAX/build/bin/CTL3DV2.DLL}
 SECS=${SECS:-90}
+SUFFIX=; [ "${DLL:-0}" = 1 ] && SUFFIX=-dll
 JOBS=${JOBS:-4}
 SAMPLES=${*:-$(sed -e 's/#.*//' -e '/^ *$/d' "$TOP/samples.lst" | awk '{print $1}')}
 
@@ -31,7 +35,7 @@ crlf() { tr '|' '\n' | sed 's/$/\r/'; }
 run_one() {         # run_one os sample
     local os=$1 s=$2 img dir out P
     dir=$(awk -v s="$s" '$1==s {print $2}' "$TOP/samples.lst")
-    out=$TOP/build/test/$os/$s; rm -rf "$out"; mkdir -p "$out"
+    out=$TOP/build/test$SUFFIX/$os/$s; rm -rf "$out"; mkdir -p "$out"
     case $os in win311) img=$WIN311IMG ;; win98) img=$WIN98IMG ;; esac
     cp --sparse=always "$img" "$out/test.img"
     P="$out/test.img@@32256"
@@ -43,7 +47,12 @@ run_one() {         # run_one os sample
         case ${f##*/} in makefile*) continue ;; esac
         [ -f "$f" ] && mcopy -o -i "$P" "$f" ::/$D/
     done
-    mcopy -o -i "$P" "$TOP/build/samples/$dir/$s.exe" ::/$D/
+    if [ "${DLL:-0}" = 1 ]; then
+        mcopy -o -i "$P" "$TOP/build/samples-dll/$dir/$s.exe" ::/$D/
+        mcopy -o -i "$P" "$TOP/build/dll/WX.DLL" ::/$D/
+    else
+        mcopy -o -i "$P" "$TOP/build/samples/$dir/$s.exe" ::/$D/
+    fi
     [ -f "$CTL3DDLL" ] && mcopy -o -i "$P" "$CTL3DDLL" ::/$D/
     if [ $os = win311 ]; then
         echo 'DEVICE=C:\HIMEM.SYS|FILES=40|BUFFERS=20|SHELL=C:\COMMAND.COM C:\ /P' | crlf > "$out/CONFIG.SYS"
@@ -63,7 +72,7 @@ run_one() {         # run_one os sample
     { sleep "$SECS"; echo "screendump $out/screen.ppm"; sleep 1; echo quit; } |
     qemu-system-i386 -machine pc ${ACCEL:--accel kvm} "${cpu[@]}" -m $mem -display none -vga std \
         -monitor stdio "${drive[@]}" -boot c -nic none -rtc base=localtime > "$out/qemu.log" 2>&1
-    magick "$out/screen.ppm" "$TOP/build/test/$os/$s.png" 2>/dev/null && rm -f "$out/screen.ppm"
+    magick "$out/screen.ppm" "$TOP/build/test$SUFFIX/$os/$s.png" 2>/dev/null && rm -f "$out/screen.ppm"
     rm -f "$out/test.img"
     echo "$os $s"
 }
@@ -77,7 +86,7 @@ for os in win311 win98; do
         run_one $os "$s" &
     done
     wait
-    ls "$TOP/build/test/$os/"*.png > /dev/null 2>&1 &&
-        magick montage $(for s in $SAMPLES; do f=$TOP/build/test/$os/$s.png; [ -f "$f" ] && echo "$f"; done) \
-            -tile 4x -geometry 400x300+3+3 -label '%t' "$TOP/build/test/$os/index.png"
+    ls "$TOP/build/test$SUFFIX/$os/"*.png > /dev/null 2>&1 &&
+        magick montage $(for s in $SAMPLES; do f=$TOP/build/test$SUFFIX/$os/$s.png; [ -f "$f" ] && echo "$f"; done) \
+            -tile 4x -geometry 400x300+3+3 -label '%t' "$TOP/build/test$SUFFIX/$os/index.png"
 done

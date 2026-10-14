@@ -18,7 +18,7 @@
 typedef       void    *wxCheckBox ;
 #else
 
-WXDLLEXPORT extern Constdata char *wxCheckBoxNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxCheckBoxNameStr;
 
 // Checkbox item (single checkbox)
 class wxBitmap;

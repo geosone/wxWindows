@@ -55,7 +55,7 @@ class WXDLLEXPORT wxClassInfo
    wxClassInfo *baseInfo1;
    wxClassInfo *baseInfo2;
 
-   static wxClassInfo *first;
+   static wxClassInfo * WXDLLEXPORT_DATA first;
    wxClassInfo *next;
 
    wxClassInfo(char *cName, char *baseName1, char *baseName2, int sz, wxObjectConstructorFn fn);
@@ -76,7 +76,7 @@ WXDLLEXPORT wxObject *wxCreateDynamicObject(char *name);
 
 #define DECLARE_DYNAMIC_CLASS(name) \
  public:\
-  static wxClassInfo class##name;\
+  static wxClassInfo WXDLLEXPORT_DATA class##name;\
   wxClassInfo *GetClassInfo() \
    { return &name::class##name; }
 

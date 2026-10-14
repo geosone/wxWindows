@@ -224,7 +224,7 @@ class WXDLLEXPORT wxPrintSetupData: public wxObject
   void operator=(wxPrintSetupData& data);
 };
 
-extern wxPrintSetupData *wxThePrintSetupData;
+extern wxPrintSetupData * WXDLLEXPORT_DATA wxThePrintSetupData;
 WXDLLEXPORT extern void wxInitializePrintSetupData(Bool init = TRUE);
 
 
@@ -263,7 +263,7 @@ class WXDLLEXPORT wxPrintPaperDatabase: public wxList
   wxPrintPaperType *FindPaperType(char *name);
 };
 
-extern wxPrintPaperDatabase *wxThePrintPaperDatabase;
+extern wxPrintPaperDatabase * WXDLLEXPORT_DATA wxThePrintPaperDatabase;
 
 #endif // IN_CPROTO
 #endif // USE_POSTSCRIPT

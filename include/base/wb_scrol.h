@@ -24,7 +24,7 @@
 typedef       void    *wxbScrollBar ;
 #else
 
-WXDLLEXPORT extern Constdata char *wxScrollBarNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxScrollBarNameStr;
 
 // Scrollbar item
 class WXDLLEXPORT wxbScrollBar: public wxItem

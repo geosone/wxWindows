@@ -29,7 +29,7 @@
 typedef	void	*wxEnhDialogBox;
 #else
 
-WXDLLEXPORT extern Constdata char *wxEnhDialogNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxEnhDialogNameStr;
 
 // Enhanced Dialog styles
 // Command area placment

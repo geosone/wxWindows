@@ -69,14 +69,14 @@ class WXDLLEXPORT wxFontDialog: public wxDialogBox
  */
  
 
-WXDLLEXPORT extern Constdata char *wxMessageBoxCaptionStr;
+extern Constdata char * WXDLLEXPORT_DATA wxMessageBoxCaptionStr;
 WXDLLEXPORT int wxMessageBox(Const char *message, Constdata char *caption = wxMessageBoxCaptionStr, long style = wxOK|wxCENTRE,
   wxWindow *parent = NULL, int x = -1, int y = -1);
 
 // An extended version of wxFileSelector
 
-WXDLLEXPORT extern Constdata char *wxFileSelectorPromptStr;
-WXDLLEXPORT extern Constdata char *wxFileSelectorDefaultWildcardStr;
+extern Constdata char * WXDLLEXPORT_DATA wxFileSelectorPromptStr;
+extern Constdata char * WXDLLEXPORT_DATA wxFileSelectorDefaultWildcardStr;
 WXDLLEXPORT char *wxFileSelectorEx(Constdata char *message = wxFileSelectorPromptStr, Const char *default_path = NULL,
                      Const char *default_filename = NULL, int *indexDefaultExtension = NULL,
                      Constdata char *wildcard = wxFileSelectorDefaultWildcardStr, int flags = 0,

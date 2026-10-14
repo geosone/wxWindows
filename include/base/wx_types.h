@@ -124,7 +124,7 @@ class WXDLLEXPORT wxTypeTree: public wxHashTable
   char *GetName(WXTYPE t);
 };
 
-extern wxTypeTree wxAllTypes;
+extern wxTypeTree WXDLLEXPORT_DATA wxAllTypes;
 
 WXDLLEXPORT Bool wxSubType(WXTYPE type1, WXTYPE type2);
 

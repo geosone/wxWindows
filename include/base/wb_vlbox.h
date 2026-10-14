@@ -36,7 +36,7 @@ typedef char *(*CPFPCPI)(char *, int);
 typedef       void    *wxbVirtListBox;
 #else
 
-WXDLLEXPORT extern Constdata char *wxVirtListBoxNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxVirtListBoxNameStr;
 
 class wxListBox;
 class wxScrollBar;

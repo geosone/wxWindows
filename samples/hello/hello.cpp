@@ -753,9 +753,11 @@ void list_proc(wxListBox& list, wxCommandEvent& event)
 #endif
   *(frame->text_window) << event.commandString << "\n";
 
+#ifndef NO_TEXT_WINDOW_STREAM    // not a streambuf in the DLL build
   ostream str(frame->text_window);
   str << "Testing\n";
   str.flush();
+#endif
 #ifdef wx_x
   int *liste,count ;
   count = list.GetSelections(&liste) ;

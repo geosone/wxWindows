@@ -24,8 +24,8 @@
 typedef       void    *wxbFrame ;
 #else
 
-WXDLLEXPORT extern Constdata char *wxFrameNameStr;
-WXDLLEXPORT extern Constdata char *wxStatusLineNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxFrameNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxStatusLineNameStr;
 
 class wxMenuBar;
 class wxPanel ;

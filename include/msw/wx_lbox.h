@@ -18,7 +18,7 @@
 typedef       void    *wxListBox ;
 #else
 
-WXDLLEXPORT extern Constdata char *wxListBoxNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxListBoxNameStr;
 
 // List box item
 class WXDLLEXPORT wxListBox: public wxbListBox

@@ -80,10 +80,10 @@ WXDLLEXPORT void wxRegisterId(long id);
 WXDLLEXPORT long wxGetCurrentId(void);
 
 // Useful buffer
-extern char *wxBuffer;
+extern char * WXDLLEXPORT_DATA wxBuffer;
 
-extern const char *wxFloatToStringStr;
-extern const char *wxDoubleToStringStr;
+extern const char * WXDLLEXPORT_DATA wxFloatToStringStr;
+extern const char * WXDLLEXPORT_DATA wxDoubleToStringStr;
 
 // Various conversions
 WXDLLEXPORT void StringToFloat(char *s, float *number);
@@ -332,7 +332,7 @@ WXDLLEXPORT int wxGetOsVersion(int *majorVsn=NULL,int *minorVsn=NULL) ;
 
 // Set the cursor to the busy cursor for all windows
 class wxCursor;
-WXDLLEXPORT extern wxCursor *wxHOURGLASS_CURSOR;
+extern wxCursor * WXDLLEXPORT_DATA wxHOURGLASS_CURSOR;
 WXDLLEXPORT void wxBeginBusyCursor(wxCursor *cursor = wxHOURGLASS_CURSOR);
  
 // Restore cursor to normal
@@ -344,11 +344,11 @@ WXDLLEXPORT Bool wxIsBusy(void);
 /* Error message functions used by wxWindows */
 
 // Non-fatal error (continues)
-extern const char *wxInternalErrorStr;
+extern const char * WXDLLEXPORT_DATA wxInternalErrorStr;
 WXDLLEXPORT void wxError(const char *msg, const char *title = wxInternalErrorStr);
 
 // Fatal error (exits)
-extern const char *wxFatalErrorStr;
+extern const char * WXDLLEXPORT_DATA wxFatalErrorStr;
 WXDLLEXPORT void wxFatalError(const char *msg, const char *title = wxFatalErrorStr);
 
 // Reading and writing resources (eg WIN.INI, .Xdefaults)
@@ -380,7 +380,7 @@ WXDLLEXPORT Bool wxCheckForInterrupt(wxWindow *wnd);
 // MSW only: get user-defined resource from the .res file.
 // Returns NULL or newly-allocated memory, so use delete[] to clean up.
 #ifdef wx_msw
-extern const char *wxUserResourceStr;
+extern const char * WXDLLEXPORT_DATA wxUserResourceStr;
 WXDLLEXPORT char *wxLoadUserResource(const char *resourceName, const char *resourceType = wxUserResourceStr);
 #endif
 

@@ -49,7 +49,7 @@ class wxResourceTable;
 class wxItemResource;
 #endif
 
-WXDLLEXPORT extern Constdata char *wxPanelNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxPanelNameStr;
 
 class WXDLLEXPORT wxbPanel: public wxCanvas
 {

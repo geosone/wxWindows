@@ -228,8 +228,8 @@ WXDLLEXPORT int wxFontWeightStringToInt(char *weight);
 WXDLLEXPORT int wxFontStyleStringToInt(char *style);
 
 // Handy dialog functions (will be converted into classes at some point)
-WXDLLEXPORT extern Constdata char *wxGetTextFromUserPromptStr;
-WXDLLEXPORT extern Constdata char *wxEmptyString;
+extern Constdata char * WXDLLEXPORT_DATA wxGetTextFromUserPromptStr;
+extern Constdata char * WXDLLEXPORT_DATA wxEmptyString;
 WXDLLEXPORT char *wxGetTextFromUser(Const char *message, Constdata char *caption = wxGetTextFromUserPromptStr,
                         Constdata char *default_value = wxEmptyString, wxWindow *parent = NULL,
                         int x = -1, int y = -1, Bool centre = TRUE);
@@ -265,7 +265,7 @@ WXDLLEXPORT int wxGetMultipleChoice(Const char *message, Const char *caption,
 // type is an 'or' (|) of wxOK, wxCANCEL, wxYES_NO
 // Returns wxYES/NO/OK/CANCEL
 
-WXDLLEXPORT extern Constdata char *wxMessageBoxCaptionStr;
+extern Constdata char * WXDLLEXPORT_DATA wxMessageBoxCaptionStr;
 WXDLLEXPORT int wxbMessageBox(Const char *message, Constdata char *caption = wxMessageBoxCaptionStr, long style = wxOK|wxCENTRE,
   wxWindow *parent = NULL, int x = -1, int y = -1);
 
@@ -281,8 +281,8 @@ WXDLLEXPORT char * wxLoadFileSelector(Const char *what, Const char *extension, C
 WXDLLEXPORT char * wxSaveFileSelector(Const char *what, Const char *extension, Const char *default_name = NULL, wxWindow *parent = NULL);
 
 // File selector
-WXDLLEXPORT extern Constdata char *wxFileSelectorPromptStr;
-WXDLLEXPORT extern Constdata char *wxFileSelectorDefaultWildcardStr;
+extern Constdata char * WXDLLEXPORT_DATA wxFileSelectorPromptStr;
+extern Constdata char * WXDLLEXPORT_DATA wxFileSelectorDefaultWildcardStr;
 WXDLLEXPORT char *wxFileSelector(Constdata char *message = wxFileSelectorPromptStr, Const char *default_path = NULL,
                      Const char *default_filename = NULL, Const char *default_extension = NULL,
                      Constdata char *wildcard = wxFileSelectorDefaultWildcardStr, int flags = 0,

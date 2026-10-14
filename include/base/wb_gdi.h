@@ -172,7 +172,7 @@ class WXDLLEXPORT wxFontNameDirectory : public wxObject
   int GetFamily(int fontid); /* MATTHEW: [4] New font system */
 };
 
-extern wxFontNameDirectory wxTheFontNameDirectory;
+extern wxFontNameDirectory WXDLLEXPORT_DATA wxTheFontNameDirectory;
 #endif
 
 // Colour
@@ -419,53 +419,53 @@ class WXDLLEXPORT wxGDIList: public wxList
 };
 
 // Lists of GDI objects
-WXDLLEXPORT extern wxPenList   *wxThePenList;
-WXDLLEXPORT extern wxBrushList *wxTheBrushList;
-WXDLLEXPORT extern wxFontList   *wxTheFontList;
-WXDLLEXPORT extern wxGDIList   *wxTheBitmapList;
+extern wxPenList   * WXDLLEXPORT_DATA wxThePenList;
+extern wxBrushList * WXDLLEXPORT_DATA wxTheBrushList;
+extern wxFontList   * WXDLLEXPORT_DATA wxTheFontList;
+extern wxGDIList   * WXDLLEXPORT_DATA wxTheBitmapList;
 
 // Stock objects
-WXDLLEXPORT extern wxFont *wxNORMAL_FONT;
-WXDLLEXPORT extern wxFont *wxSMALL_FONT;
-WXDLLEXPORT extern wxFont *wxITALIC_FONT;
-WXDLLEXPORT extern wxFont *wxSWISS_FONT;
+extern wxFont * WXDLLEXPORT_DATA wxNORMAL_FONT;
+extern wxFont * WXDLLEXPORT_DATA wxSMALL_FONT;
+extern wxFont * WXDLLEXPORT_DATA wxITALIC_FONT;
+extern wxFont * WXDLLEXPORT_DATA wxSWISS_FONT;
 
-WXDLLEXPORT extern wxPen *wxRED_PEN;
-WXDLLEXPORT extern wxPen *wxCYAN_PEN;
-WXDLLEXPORT extern wxPen *wxGREEN_PEN;
-WXDLLEXPORT extern wxPen *wxBLACK_PEN;
-WXDLLEXPORT extern wxPen *wxWHITE_PEN;
-WXDLLEXPORT extern wxPen *wxTRANSPARENT_PEN;
-WXDLLEXPORT extern wxPen *wxBLACK_DASHED_PEN;
-WXDLLEXPORT extern wxPen *wxGREY_PEN;
-WXDLLEXPORT extern wxPen *wxMEDIUM_GREY_PEN;
-WXDLLEXPORT extern wxPen *wxLIGHT_GREY_PEN;
+extern wxPen * WXDLLEXPORT_DATA wxRED_PEN;
+extern wxPen * WXDLLEXPORT_DATA wxCYAN_PEN;
+extern wxPen * WXDLLEXPORT_DATA wxGREEN_PEN;
+extern wxPen * WXDLLEXPORT_DATA wxBLACK_PEN;
+extern wxPen * WXDLLEXPORT_DATA wxWHITE_PEN;
+extern wxPen * WXDLLEXPORT_DATA wxTRANSPARENT_PEN;
+extern wxPen * WXDLLEXPORT_DATA wxBLACK_DASHED_PEN;
+extern wxPen * WXDLLEXPORT_DATA wxGREY_PEN;
+extern wxPen * WXDLLEXPORT_DATA wxMEDIUM_GREY_PEN;
+extern wxPen * WXDLLEXPORT_DATA wxLIGHT_GREY_PEN;
 
-WXDLLEXPORT extern wxBrush *wxBLUE_BRUSH;
-WXDLLEXPORT extern wxBrush *wxGREEN_BRUSH;
-WXDLLEXPORT extern wxBrush *wxWHITE_BRUSH;
-WXDLLEXPORT extern wxBrush *wxBLACK_BRUSH;
-WXDLLEXPORT extern wxBrush *wxGREY_BRUSH;
-WXDLLEXPORT extern wxBrush *wxMEDIUM_GREY_BRUSH;
-WXDLLEXPORT extern wxBrush *wxLIGHT_GREY_BRUSH;
-WXDLLEXPORT extern wxBrush *wxTRANSPARENT_BRUSH;
-WXDLLEXPORT extern wxBrush *wxCYAN_BRUSH;
-WXDLLEXPORT extern wxBrush *wxRED_BRUSH;
+extern wxBrush * WXDLLEXPORT_DATA wxBLUE_BRUSH;
+extern wxBrush * WXDLLEXPORT_DATA wxGREEN_BRUSH;
+extern wxBrush * WXDLLEXPORT_DATA wxWHITE_BRUSH;
+extern wxBrush * WXDLLEXPORT_DATA wxBLACK_BRUSH;
+extern wxBrush * WXDLLEXPORT_DATA wxGREY_BRUSH;
+extern wxBrush * WXDLLEXPORT_DATA wxMEDIUM_GREY_BRUSH;
+extern wxBrush * WXDLLEXPORT_DATA wxLIGHT_GREY_BRUSH;
+extern wxBrush * WXDLLEXPORT_DATA wxTRANSPARENT_BRUSH;
+extern wxBrush * WXDLLEXPORT_DATA wxCYAN_BRUSH;
+extern wxBrush * WXDLLEXPORT_DATA wxRED_BRUSH;
 
-WXDLLEXPORT extern wxColour *wxBLACK;
-WXDLLEXPORT extern wxColour *wxWHITE;
-WXDLLEXPORT extern wxColour *wxRED;
-WXDLLEXPORT extern wxColour *wxBLUE;
-WXDLLEXPORT extern wxColour *wxGREEN;
-WXDLLEXPORT extern wxColour *wxCYAN;
-WXDLLEXPORT extern wxColour *wxLIGHT_GREY;
+extern wxColour * WXDLLEXPORT_DATA wxBLACK;
+extern wxColour * WXDLLEXPORT_DATA wxWHITE;
+extern wxColour * WXDLLEXPORT_DATA wxRED;
+extern wxColour * WXDLLEXPORT_DATA wxBLUE;
+extern wxColour * WXDLLEXPORT_DATA wxGREEN;
+extern wxColour * WXDLLEXPORT_DATA wxCYAN;
+extern wxColour * WXDLLEXPORT_DATA wxLIGHT_GREY;
 
 // Stock cursors types
-WXDLLEXPORT extern wxCursor *wxSTANDARD_CURSOR;
-WXDLLEXPORT extern wxCursor *wxHOURGLASS_CURSOR;
-WXDLLEXPORT extern wxCursor *wxCROSS_CURSOR;
+extern wxCursor * WXDLLEXPORT_DATA wxSTANDARD_CURSOR;
+extern wxCursor * WXDLLEXPORT_DATA wxHOURGLASS_CURSOR;
+extern wxCursor * WXDLLEXPORT_DATA wxCROSS_CURSOR;
 
-WXDLLEXPORT extern wxColourDatabase *wxTheColourDatabase;
+extern wxColourDatabase * WXDLLEXPORT_DATA wxTheColourDatabase;
 WXDLLEXPORT extern void wxInitializeStockObjects(void);
 WXDLLEXPORT extern void wxDeleteStockObjects(void);
 

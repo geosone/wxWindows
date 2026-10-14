@@ -5,6 +5,9 @@
 #   make                  library build/lib/wx.lib and all samples
 #   make lib              only the library
 #   make samples          only the samples (build/samples/<name>/<name>.exe)
+#   make dll              build/dll/WX.DLL, import library build/lib/wxdll.lib
+#                         and build/lib/wxdllmain.obj (WinMain, new/delete)
+#   make samples-dll      the samples against WX.DLL (build/samples-dll)
 #   make clean
 #
 # Variables: WATCOM (default /opt/watcom), DEBUG=1 (debug all)
@@ -104,7 +107,66 @@ samples: $(OUT)/samples/$(2)/$(1).exe
 endef
 $(foreach l,$(SAMPLELINES),$(eval $(call SAMPLE,$(word 1,$(subst :, ,$(l))),$(word 2,$(subst :, ,$(l))),$(word 3,$(subst :, ,$(l))),$(wordlist 4,99,$(subst :, ,$(l))))))
 
-.PHONY: all lib samples clean
+# --- DLL --------------------------------------------------------------
+# the library objects once more: -bd (DLL), -zu (SS != DS), -s (the stack
+# check would run before DS is loaded), owdll.h (every function loads DS)
+DOBJ    := $(OUT)/dllobj
+DLLFLAGS := $(CFLAGS) -bd -zu -s -fi=$(TOP)/src/msw/owdll.h -dWXMAKINGDLL
+DLLOBJS := $(patsubst $(OBJ)/%,$(DOBJ)/%,$(LIBOBJS))
+DLLWINLIBS := commdlg mmsystem shell ddeml ctl3dv2
+define DMODULE
+$(DOBJ)/$(1)/%.obj: $(TOP)/$(1)/%.cpp | $(DOBJ)/$(1)/.dir
+	cd $(TOP)/$(1) && $(CXX) $(DLLFLAGS) -fo=$$@ $$< > $$@.log 2>&1 || { cat $$@.log; exit 1; }
+$(DOBJ)/$(1)/%.obj: $(TOP)/$(1)/%.c | $(DOBJ)/$(1)/.dir
+	cd $(TOP)/$(1) && $(CC) $(DLLFLAGS) -fo=$$@ $$< > $$@.log 2>&1 || { cat $$@.log; exit 1; }
+endef
+$(foreach m,$(MODULES),$(eval $(call DMODULE,$(word 1,$(subst :, ,$(m))))))
+$(eval $(call DMODULE,src/msw))
+$(eval $(call DMODULE,src/base))
+$(DOBJ)/utils/prologio/src/y_tab.obj: $(TOP)/utils/prologio/src/lex_yy.c
+
+DLL     := $(OUT)/dll/WX.DLL
+DLLIMP  := $(OUT)/lib/wxdll.lib
+DLLMAIN := $(OUT)/lib/wxdllmain.obj
+dll: $(DLL) $(DLLIMP) $(DLLMAIN)
+$(OUT)/dll/exports.lnk: $(DLLOBJS) $(TOP)/tools/wxdll.py | $(OUT)/dll/.dir
+	python3 $(TOP)/tools/wxdll.py exports WX $@ $(DLLOBJS)
+$(DLL): $(DLLOBJS) $(OUT)/dll/exports.lnk
+	cd $(OUT)/dll && $(WLINK) option quiet format windows dll name $@ \
+	  libpath $(WATCOM)/lib286/win libpath $(WATCOM)/lib286 library windows \
+	  file $(WATCOM)/lib286/win/libentry.obj $(foreach o,$(DLLOBJS),file $(o)) \
+	  $(foreach l,$(DLLWINLIBS),library $(l)) library $(WATCOM)/lib286/win/plibl.lib \
+	  option heapsize=16k option version=3.10 option map=WX.map @exports.lnk \
+	  > $@.log 2>&1 || { cat $@.log; exit 1; }
+$(DLLIMP): $(DLL) $(OUT)/dll/exports.lnk | $(OUT)/lib/.dir
+	python3 $(TOP)/tools/wxdll.py implib WX $(OUT)/dll/exports.lnk $(OUT)/dll/implib.cmd
+	rm -f $@ && $(WLIB) -q -n $@ @$(OUT)/dll/implib.cmd
+# a program using the DLL: -dWXUSINGDLL; its functions load DS too
+# (owdll.h), because the DLL calls them (virtual functions, callbacks) with
+# the DLL's DS - so one instance per program (dummy.cpp's WinMain), the
+# code would load the first instance's DGROUP; -s: no stack check before
+# DS is loaded.  wxdllmain.obj (WinMain, new/delete) is linked as a file.
+CLIENTFLAGS := $(filter-out -zw,$(CFLAGS)) -s -fi=$(TOP)/src/msw/owdll.h -dWXUSINGDLL
+$(DLLMAIN): $(TOP)/src/msw/dummy.cpp | $(OUT)/lib/.dir
+	cd $(TOP)/src/msw && $(CXX) $(CLIENTFLAGS) -fo=$@ dummy.cpp > $@.log 2>&1 || { cat $@.log; exit 1; }
+
+define DSAMPLE
+$(1)_DOBJS := $(addprefix $(OUT)/samples-dll/$(2)/,$(addsuffix .obj,$(4)))
+$(OUT)/samples-dll/$(2)/%.obj: $(TOP)/samples/$(2)/%.cpp $(DLLIMP) | $(OUT)/samples-dll/$(2)/.dir
+	cd $(TOP)/samples/$(2) && $(CXX) $(CLIENTFLAGS) -fo=$$@ $$< > $$@.log 2>&1 || { cat $$@.log; exit 1; }
+$(OUT)/samples-dll/$(2)/$(1).exe: $$($(1)_DOBJS) $(OUT)/samples/$(2)/$(1).res $(DLLIMP) $(DLLMAIN)
+	cd $(OUT)/samples-dll/$(2) && $(WLINK) option quiet format windows name $$@ \
+	  libpath $(WATCOM)/lib286/win libpath $(WATCOM)/lib286 library windows \
+	  file $(DLLMAIN) $$(foreach o,$$($(1)_DOBJS),file $$(o)) library $(DLLIMP) \
+	  $(foreach l,$(WINLIBS),library $(l)) library $(WATCOM)/lib286/win/plibl.lib \
+	  option stack=16k option heapsize=4k option version=3.10 \
+	  option resource=$(OUT)/samples/$(2)/$(1).res option map=$(1).map \
+	  > $$@.log 2>&1 || { cat $$@.log; exit 1; }
+samples-dll: $(OUT)/samples-dll/$(2)/$(1).exe
+endef
+$(foreach l,$(SAMPLELINES),$(eval $(call DSAMPLE,$(word 1,$(subst :, ,$(l))),$(word 2,$(subst :, ,$(l))),$(word 3,$(subst :, ,$(l))),$(wordlist 4,99,$(subst :, ,$(l))))))
+
+.PHONY: all lib samples dll samples-dll clean
 all: lib samples
 .DEFAULT_GOAL := all
 clean:

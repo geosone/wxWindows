@@ -24,8 +24,8 @@
 typedef       void    *wxbText ;
 #else
 
-WXDLLEXPORT extern Constdata char *wxTextNameStr;
-WXDLLEXPORT extern Constdata char *wxEmptyString;
+extern Constdata char * WXDLLEXPORT_DATA wxTextNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxEmptyString;
 
 // Single-line text item
 class WXDLLEXPORT wxbText: public wxItem

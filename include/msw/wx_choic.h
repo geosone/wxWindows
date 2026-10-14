@@ -18,7 +18,7 @@
 typedef       void    *wxChoice ;
 #else
 
-WXDLLEXPORT extern Constdata char *wxChoiceNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxChoiceNameStr;
 
 // Choice item
 class WXDLLEXPORT wxChoice: public wxbChoice

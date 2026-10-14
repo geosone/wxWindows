@@ -22,7 +22,7 @@
 typedef void    *wxDialogBox ;
 #else
 
-WXDLLEXPORT extern Constdata char *wxDialogNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxDialogNameStr;
 
 // Dialog boxes
 class WXDLLEXPORT wxDialogBox: public wxbDialogBox

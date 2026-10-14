@@ -141,7 +141,7 @@ class WXDLLEXPORT wxResourceTable: public wxHashTable
     virtual void ClearTable(void);
 };
 
-extern wxResourceTable wxDefaultResourceTable;
+extern wxResourceTable WXDLLEXPORT_DATA wxDefaultResourceTable;
 WXDLLEXPORT extern long wxParseWindowStyle(char *style);
 
 class wxMenuBar;

@@ -19,7 +19,7 @@
 typedef       void    *wxCanvas ;
 #else
 
-WXDLLEXPORT extern Constdata char *wxCanvasNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxCanvasNameStr;
 
 // Canvas subwindow for drawing on
 class WXDLLEXPORT wxCanvas: public wxbCanvas

@@ -30,7 +30,7 @@
 typedef       void    *wxbTextWindow ;
 #else
 
-WXDLLEXPORT extern Constdata char *wxTextWindowNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxTextWindowNameStr;
 
 class WXDLLEXPORT wxbTextWindow: public wxWindow
 

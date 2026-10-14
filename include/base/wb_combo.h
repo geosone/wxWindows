@@ -27,8 +27,8 @@
 typedef       void    *wxbComboBox ;
 #else
 
-WXDLLEXPORT extern Constdata char *wxComboBoxNameStr;
-WXDLLEXPORT extern Constdata char *wxEmptyString;
+extern Constdata char * WXDLLEXPORT_DATA wxComboBoxNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxEmptyString;
 
 // Choice item
 class WXDLLEXPORT wxbComboBox: public wxItem

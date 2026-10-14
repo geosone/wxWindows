@@ -88,7 +88,7 @@ class WXDLLEXPORT wxbApp: public wxObject
   inline wxlanguage_t GetLanguage(void) { return wxLang; }
 };
 
-WXDLLEXPORT extern wxApp *wxTheApp;
+extern wxApp * WXDLLEXPORT_DATA wxTheApp;
 
 WXDLLEXPORT void wxCleanUp(void);
 WXDLLEXPORT void wxCommonCleanUp(void); // Call this from the platform's wxCleanUp()

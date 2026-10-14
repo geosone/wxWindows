@@ -223,13 +223,13 @@ class WXDLLEXPORT wxbDC: public wxObject
 };
 
 /*
-extern char wx_printer_file[];
-extern float wx_printer_scale_x;
-extern float wx_printer_scale_y;
-extern float wx_printer_translate_x;
-extern float wx_printer_translate_y;
+extern char WXDLLEXPORT_DATA wx_printer_file[];
+extern float WXDLLEXPORT_DATA wx_printer_scale_x;
+extern float WXDLLEXPORT_DATA wx_printer_scale_y;
+extern float WXDLLEXPORT_DATA wx_printer_translate_x;
+extern float WXDLLEXPORT_DATA wx_printer_translate_y;
 */
-extern int wxPageNumber;
+extern int WXDLLEXPORT_DATA wxPageNumber;
 
 // Conversion
 #define METRIC_CONVERSION_CONSTANT  0.0393700787

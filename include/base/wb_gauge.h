@@ -24,7 +24,7 @@
 typedef       void    *wxbGauge;
 #else
 
-WXDLLEXPORT extern Constdata char *wxGaugeNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxGaugeNameStr;
 
 // Group box
 class WXDLLEXPORT wxbGauge: public wxItem

@@ -25,7 +25,7 @@
 typedef       void    *wxPanel ;
 #else
 
-WXDLLEXPORT extern Constdata char *wxPanelNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxPanelNameStr;
 
 class wxItem;
 class wxFrame;

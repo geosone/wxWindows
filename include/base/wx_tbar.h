@@ -26,7 +26,7 @@
 #include "wx_canvs.h"
 #include "wx_dcmem.h"
 
-WXDLLEXPORT extern Constdata char *wxToolBarNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxToolBarNameStr;
 
 #define wxTOOL_STYLE_BUTTON          1
 #define wxTOOL_STYLE_SEPARATOR       2

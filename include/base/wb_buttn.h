@@ -24,7 +24,7 @@
 typedef       void    *wxbButton ;
 #else
 
-WXDLLEXPORT extern Constdata char *wxButtonNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxButtonNameStr;
 
 // Pushbutton
 class wxBitmap;

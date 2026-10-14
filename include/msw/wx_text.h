@@ -28,7 +28,7 @@
 typedef       void    *wxTextWindow ;
 #else
 
-WXDLLEXPORT extern Constdata char *wxTextWindowNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxTextWindowNameStr;
 
 class WXDLLEXPORT wxTextWindow: public wxbTextWindow
 {

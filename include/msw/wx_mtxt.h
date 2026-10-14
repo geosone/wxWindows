@@ -18,8 +18,8 @@
 typedef       void    *wxMultiText ;
 #else
 
-WXDLLEXPORT extern Constdata char *wxMultiTextnameStr;
-WXDLLEXPORT extern Constdata char *wxEmptyString;
+extern Constdata char * WXDLLEXPORT_DATA wxMultiTextnameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxEmptyString;
 
 // Multi-line text item
 class WXDLLEXPORT wxMultiText: public wxbMultiText

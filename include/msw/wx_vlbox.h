@@ -18,7 +18,7 @@
 typedef       void    *wxVirtListBox;
 #else
 
-WXDLLEXPORT extern Constdata char *wxVirtListBoxNameStr;
+extern Constdata char * WXDLLEXPORT_DATA wxVirtListBoxNameStr;
 
 class WXDLLEXPORT wxVirtListBox: public wxbVirtListBox
 {

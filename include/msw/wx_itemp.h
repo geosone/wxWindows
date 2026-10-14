@@ -101,17 +101,17 @@ extern void wxFindMaxSize(HWND hwnd, RECT *rect);
 
 // List of controls
 #if !WXGARBAGE_COLLECTION_ON /* MATTHEW: GC */
-extern wxList *wxControlHandleList;
+extern wxList * WXDLLEXPORT_DATA wxControlHandleList;
 #else
-extern wxNonlockingHashTable *wxControlHandleList;
+extern wxNonlockingHashTable * WXDLLEXPORT_DATA wxControlHandleList;
 #endif
 
 // List of scrollbar controls
-extern wxList wxScrollBarList;
+extern wxList WXDLLEXPORT_DATA wxScrollBarList;
 // The MakeProcInstance version of the function wxSubclassedGenericControlProc
-extern FARPROC wxGenericControlSubClassProc;
-extern char *wxBuffer;
-extern HINSTANCE wxhInstance;
+extern FARPROC WXDLLEXPORT_DATA wxGenericControlSubClassProc;
+extern char * WXDLLEXPORT_DATA wxBuffer;
+extern HINSTANCE WXDLLEXPORT_DATA wxhInstance;
 
 WXDLLEXPORT wxWindow *wxFindControlFromHandle(HWND hWnd);
 WXDLLEXPORT void wxAddControlHandle(HWND hWnd, wxWindow *item);
