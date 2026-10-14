@@ -59,6 +59,12 @@ class WXDLLEXPORT wxDialogBox: public wxbDialogBox
   
   void SetModal(Bool flag);
 
+  // A dialog from a DIALOG resource of the program (the controls stay
+  // Windows controls: commands from them go to OnNativeCommand)
+  Bool nativeDialog;
+  Bool LoadNativeDialog(wxWindow *parent, Const char *name, Bool modal = TRUE);
+  virtual Bool OnNativeCommand(int id, int notify);
+
 };
 
 #endif // IN_CPROTO

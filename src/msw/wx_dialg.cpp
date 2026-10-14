@@ -121,6 +121,7 @@ wxDialogBox::wxDialogBox(void)
   modal = FALSE;
   isShown = FALSE;
   modal_showing = FALSE;
+  nativeDialog = FALSE;
   has_child = FALSE ;
 
   hSpacing = PANEL_HSPACING;
@@ -146,6 +147,7 @@ Bool wxDialogBox::Create(wxWindow *Parent, Const char *Title, Bool Modal,
                          int x, int y, int width, int height, long style, Constdata char *name)
 {
   SetName(name);
+  nativeDialog = FALSE;
 
   // Do anything that needs to be done in the generic base class
   wxbDialogBox::Create(Parent, Title, Modal, x, y, width, height, style, name);
@@ -215,6 +217,46 @@ Bool wxDialogBox::Create(wxWindow *Parent, Const char *Title, Bool Modal,
 
   modal = Modal;
   return TRUE;
+}
+
+// Dialog from the program's resources: position, size, caption and controls
+// as in the template
+Bool wxDialogBox::LoadNativeDialog(wxWindow *Parent, Const char *name, Bool Modal)
+{
+  SetName("dialogBox");
+  wxbDialogBox::Create(Parent, "", Modal, -1, -1, -1, -1, wxDEFAULT_DIALOG_STYLE, "dialogBox");
+  nativeDialog = TRUE;
+  has_child = FALSE;
+  labelFont = wxTheFontList->FindOrCreateFont(11, wxSWISS, wxNORMAL, wxNORMAL);
+  buttonFont = wxTheFontList->FindOrCreateFont(11, wxSWISS, wxNORMAL, wxNORMAL);
+
+  if (Parent) Parent->AddChild(this);
+  window_parent = Parent;
+  wxWinType = wxTYPE_XWND;
+  windowStyle = wxDEFAULT_DIALOG_STYLE;
+  SetLabelPosition(wxHORIZONTAL);
+  isShown = FALSE;
+  modal_showing = FALSE;
+
+  // width -2: the size of the template (wxWnd::Create)
+  wxDialogWnd *wnd = new wxDialogWnd(Parent ? (wxWnd *)Parent->handle : NULL, this,
+                                     -1, -1, -2, -2, (char *)name);
+  handle = (char *)wnd;
+  if (!wnd->handle)
+    return FALSE;
+#if !WXGARBAGE_COLLECTION_ON
+  if (!Modal)
+    wxModelessWindows.Append(this);
+#endif
+  wx_dc = new wxPanelDC(this);
+  modal = Modal;
+  return TRUE;
+}
+
+// WM_COMMAND from a control of a native dialog (IDOK, IDCANCEL, ...)
+Bool wxDialogBox::OnNativeCommand(int WXUNUSED(id), int WXUNUSED(notify))
+{
+  return FALSE;
 }
 
 void wxDialogBox::SetModal(Bool flag)

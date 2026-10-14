@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include "wx_setup.h"
 #include "wx_panel.h"
+#include "wx_dialg.h"
 #include "wx_rbox.h"
 #include "wx_txt.h"
 #include "wx_messg.h"
@@ -1202,8 +1203,9 @@ LONG APIENTRY _EXPORT
 
   if (message == WM_SETFONT)
     return 0;
-  else if (message == WM_INITDIALOG)
-    return 0;
+  else if (message == WM_INITDIALOG)    // native dialog: focus by Windows
+    return wnd && wnd->wx_window && wnd->wx_window->IsKindOf(CLASSINFO(wxDialogBox)) &&
+           ((wxDialogBox *)wnd->wx_window)->nativeDialog;
 
   // Don't know why this is necessary: seems to have a problem
   // finding the virtual wxDialogWnd::WindowProc function without being forced,
@@ -1486,7 +1488,8 @@ void wxWnd::Create(wxWnd *parent, char *wclass, wxWindow *wx_win, char *title,
     if (handle == 0)
        MessageBox(NULL, "Can't find dummy dialog template!\nCheck resource include path for finding wx.rc.",
                   "wxWindows Error", MB_ICONEXCLAMATION | MB_OK);
-    else MoveWindow(handle, x1, y1, width1, height1, FALSE);
+    else if (width != -2)       // -2: native dialog, size of the template
+      MoveWindow(handle, x1, y1, width1, height1, FALSE);
   }
   else
   {
@@ -2284,6 +2287,10 @@ BOOL wxSubWnd::OnCommand(WORD id, WORD cmd, HWND WXUNUSED(control))
     }
     wxYield();
 #endif
+    // a control of a native dialog
+    if (wx_window && wx_window->IsKindOf(CLASSINFO(wxDialogBox)) &&
+        ((wxDialogBox *)wx_window)->nativeDialog)
+      return ((wxDialogBox *)wx_window)->OnNativeCommand(id, cmd);
     return FALSE;
   }
 }
