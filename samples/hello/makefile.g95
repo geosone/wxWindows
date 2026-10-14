@@ -1,0 +1,37 @@
+#
+# File:		makefile.unx
+# Author:	Julian Smart
+# Created:	1993
+# Updated:	
+# Copyright:	(c) 1993, AIAI, University of Edinburgh
+#
+# "%W% %G%"
+#
+# Makefile for hello example (UNIX).
+
+WXDIR = ../..
+
+# All common UNIX compiler flags and options are now in
+# this central makefile.
+include $(WXDIR)/src/makeg95.env
+
+OBJECTS=$(OBJDIR)/hello.$(OBJSUFF)
+
+all:	$(OBJDIR) hello.exe
+
+$(OBJDIR):
+	mkdir $(OBJDIR)
+
+hello.exe: $(OBJDIR)/hello.$(OBJSUFF) $(WXLIB) hello.$(RESSUFF) $(WXLIB)
+	$(CC) $(LDFLAGS) -o hello.exe $(OBJDIR)/hello.$(OBJSUFF) $(LDLIBS)
+	$(RSRC) hello.$(RESSUFF) hello.exe
+
+$(OBJDIR)/hello.$(OBJSUFF):        hello.$(SRCSUFF) hello.h
+	$(CC) -c $(CPPFLAGS) -o $@ hello.$(SRCSUFF)
+        
+hello.res:  hello.rc
+
+clean:
+	rm -f $(OBJECTS) hello$(GUISUFFIX).exe core *.rsc *.res
+
+

@@ -1,0 +1,89 @@
+Internal representation
+-----------------------
+
+HTML tags are parsed into a 'tag' list, where every tag corresponds to an on-screen
+line of text or an image (or other such HTML construct). A tag then contains a list of
+line-items, which can be a string of like-formatted text or an image. The structure is
+organised like this...
+
+          tags
+           |
+           |
+           v
+     +-----------+
+     |    top    |        +------------+         +-----------+
+     |  objects  | -----> |   type     | ------> |   type    | -------->
+     |  center   |        |   left     |         |   left    |
+     | floating  |        |   width    |         |   width   |
+     |  margin   |        +------------+         +-----------+
+     +-----------+
+           |
+           |
+           v
+     +-----------+
+     |    top    |        +------------+         +-----------+
+     |  objects  | -----> |   type     | ------> |   type    | -------->
+     |  center   |        |   left     |         |   left    |
+     | floating  |        |   width    |         |   width   |
+     |  margin   |        +------------+         +-----------+
+     +-----------+
+           |
+           |
+           v
+
+
+The main types are 'text', 'image' and 'table', and the strucural types such as
+'break' and 'paragraph'. A table (or more precisely, a table cell) is considered
+a container and all it's contents are emebedded within it (i.e. not linked externally,
+and thus not accessible from outside). It is not therefore possible to do an editing
+selection across table cell boundaries.
+
+It is important to note that the tag-list is generated at parse time with the then
+current window constraints, so margins and line wrapping are set accordingly. If a
+window re-size operation occurs then the HTML must be re-parsed. The main cause of
+this restriction is the table layout algorithm.
+
+
+Auto-layout algorithm
+---------------------
+
+First calculate minimum and maximum cell widths. The minimum cell width is the maximum
+width of the first word, list index or image on all the cells lines. The maximum cell
+width is the width of the longest line in the cell with word-wrapping turned off. Then,
+given the following measurements...
+
+
+     left                                right
+    margin                               margin
+      .                                     .
+      .                                     .
+      .  +----------+-----------+           .
+      .  |          |           |           .
+      .  |  cell 1  |  cell 2   | <-- W --> .
+      .  |          |           |           .
+      .  +----------+-----------+           .
+      .                                     .
+      .   <-- m1 -->                        .
+      .                          <-------- D -------->
+      .               <- d1 ->              .
+      .                                     .
+      .  +--------------------+-----------------------+
+      .  |                    |                       |
+      .  |     Cell 1         |  Cell 2               |
+      .  |                    |                       |
+      .  +--------------------+-----------------------+
+      .                                     .
+      .   <-------- M1 ------>              .
+      .                                     .
+      .                                     .
+
+Calculate a new cell-width as follows...
+
+                                  W
+           cell-width = m1 + d1 x -
+                                  D
+
+Note: this calculation must of course be done recursively on any nested tables
+located in a cell.
+
+

@@ -1,0 +1,27 @@
+# Makefile for wxPoem (UNIX)
+# Change the WXDIR directory, and CPPFLAGS and LDFLAGS, for your system.
+
+WXDIR = ../..
+
+# All common UNIX compiler flags and options are now in
+# this central makefile.
+include $(WXDIR)/src/makeg95.env
+
+OBJECTS=$(OBJDIR)/wxpoem.$(OBJSUFF)
+
+all:	$(OBJDIR) wxpoem$(GUISUFFIX)
+
+$(OBJDIR):
+	mkdir $(OBJDIR)
+
+wxpoem$(GUISUFFIX): $(OBJDIR)/wxpoem.$(OBJSUFF) wxpoem.$(RESSUFF) $(WXDIR)/lib/libwx$(GUISUFFIX).a
+	$(CC) $(LDFLAGS) -o wxpoem$(GUISUFFIX)$(EXESUFF) $(OBJDIR)/wxpoem.$(OBJSUFF) $(LDLIBS)
+	$(RSRC) wxpoem.$(RESSUFF) wxpoem.exe
+
+$(OBJDIR)/wxpoem.$(OBJSUFF):        wxpoem.$(SRCSUFF)
+	$(CC) -c $(CPPFLAGS) -o $@ wxpoem.$(SRCSUFF)
+
+wxpoem.res: wxpoem.rc
+
+clean:
+	rm -f $(OBJECTS) wxpoem.exe core *.rsc *.res

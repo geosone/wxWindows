@@ -1,0 +1,35 @@
+#
+# File:		makefile.unx
+# Author:	Julian Smart
+# Created:	1993
+# Updated:	
+# Copyright:	(c) 1993, AIAI, University of Edinburgh
+#
+# "%W% %G%"
+#
+# Makefile for layout example (UNIX).
+
+WXDIR = ../..
+
+# All common UNIX compiler flags and options are now in
+# this central makefile.
+include $(WXDIR)/src/makeg95.env
+
+OBJECTS=$(OBJDIR)/layout.$(OBJSUFF)
+
+all:	$(OBJDIR) layout$(GUISUFFIX)
+
+$(OBJDIR):
+	mkdir $(OBJDIR)
+
+layout$(GUISUFFIX): $(OBJDIR)/layout.$(OBJSUFF) layout.$(RESSUFF) $(WXLIB)
+	$(CC) $(LDFLAGS) -o layout$(GUISUFFIX)$(EXESUFF) $(OBJDIR)/layout.$(OBJSUFF) $(XVIEW_LINK) $(LDLIBS)
+	$(RSRC) layout.$(RESSUFF) layout.exe
+
+$(OBJDIR)/layout.$(OBJSUFF):        layout.$(SRCSUFF) layout.h
+	$(CC) -c $(CPPFLAGS) -o $@ layout.$(SRCSUFF)
+
+layout.res: layout.rc
+
+clean:
+	rm -f $(OBJECTS) layout$(GUISUFFIX).exe core *.res *.rsc

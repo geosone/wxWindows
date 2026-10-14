@@ -1,0 +1,25 @@
+<HTML>
+<HEAD><TITLE>Survey</TITLE></HEAD>
+<BODY>
+<CENTER><H2>Survey (demonstration only)</H2></CENTER>
+<P>
+
+<FORM action="/cgi-bin/survey" method=GET>
+<PRE>
+Name:            <INPUT type=TEXT name=ADDRESS>
+E-mail:          <INPUT type=TEXT name=EMAIL>
+Your hardware:   <INPUT type=TEXT name=HARDWARE>
+Favourite fruit: <SELECT name=FRUIT><OPTION>Apples<OPTION>Oranges<OPTION selected>Pears<OPTION>Other</SELECT>
+Platform...      <INPUT type=RADIO name=platform value=MOTIF>Motif <INPUT type=RADIO name=platform value=XVIEW>XView <INPUT type=RADIO name=platform value=WINDOWS>Windows
+
+Comments:
+<TEXTAREA name=COMMENTS ROWS=8 COLS=40 wrap></TEXTAREA>
+<P>
+Upload a file:   <INPUT type=FILE name=FILNAME>
+<BR>
+<INPUT type=SUBMIT name=Send value=submit> <INPUT type=RESET>
+</PRE>
+</FORM>
+
+</BODY>
+</HTML>
